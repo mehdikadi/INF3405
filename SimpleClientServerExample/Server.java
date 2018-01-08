@@ -1,4 +1,8 @@
-// Source : http://cs.lmu.edu/~ray/notes/javanetexamples/
+// Source :
+// Ray Toal
+// Department of Electrical Engineering and Computer Science
+// Loyola Marymount University
+// http://cs.lmu.edu/~ray/notes/javanetexamples/
 
 import java.io.BufferedReader;
 import java.io.IOException;
