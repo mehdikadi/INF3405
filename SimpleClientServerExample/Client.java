@@ -10,9 +10,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import java.net.ServerSocket;
 import java.net.Socket;
 
 import javax.swing.JFrame;
@@ -91,7 +88,7 @@ public class Client {
         Socket socket;
 		socket = new Socket(serverAddress, port);
 		
-        System.out.format("The capitalization server is running on %s:%d", serverAddress, port);
+        System.out.format("The capitalization server is running on %s:%d%n", serverAddress, port);
         
         in = new BufferedReader(
                 new InputStreamReader(socket.getInputStream()));
