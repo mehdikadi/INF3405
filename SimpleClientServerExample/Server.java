@@ -31,7 +31,7 @@ public class Server {
 
     /**
      * Application method to run the server runs in an infinite loop
-     * listening on port 9898.  When a connection is requested, it
+     * listening on port 5000.  When a connection is requested, it
      * spawns a new thread to do the servicing and immediately returns
      * to listening.  The server keeps a unique client number for each
      * client that connects just to show interesting logging
