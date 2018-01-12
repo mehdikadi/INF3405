@@ -1,15 +1,14 @@
-// Source :
-// Ray Toal
-// Department of Electrical Engineering and Computer Science
-// Loyola Marymount University
-// http://cs.lmu.edu/~ray/notes/javanetexamples/
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  * A server program which accepts requests from clients to
@@ -17,7 +16,7 @@ import java.net.Socket;
  * started to handle an interactive dialog in which the client
  * sends in a string and the server thread sends back the
  * capitalized version of the string.
- *
+ * 
  * The program is runs in an infinite loop, so shutdown in platform
  * dependent.  If you ran it from a console window with the "java"
  * interpreter, Ctrl+C generally will shut it down.
@@ -33,9 +32,23 @@ public class Server {
      * messages.  It is certainly not necessary to do this.
      */
     public static void main(String[] args) throws Exception {
-        System.out.println("The capitalization server is running.");
+       
         int clientNumber = 0;
-        ServerSocket listener = new ServerSocket(6666);
+        
+        JFrame frame = new JFrame("Capitalize Server");
+        
+        // Get the server address from a dialog box.
+        String serverAddress = JOptionPane.showInputDialog(frame,"Enter IP Address of the Server:","Welcome to the Capitalization Program", JOptionPane.QUESTION_MESSAGE);
+        int port = 5000;
+        
+		ServerSocket listener;
+		InetAddress locIP = InetAddress.getByName(serverAddress);
+		listener = new ServerSocket();
+		listener.setReuseAddress(true);
+		listener.bind(new InetSocketAddress(locIP, port));
+		
+        System.out.format("The capitalization server is running on %s:%d%n", serverAddress, port);
+    
         try {
             while (true) {
                 new Capitalizer(listener.accept(), clientNumber++).start();
@@ -71,8 +84,7 @@ public class Server {
                 // Decorate the streams so we can send characters
                 // and not just bytes.  Ensure output is flushed
                 // after every newline.
-                BufferedReader in = new BufferedReader(
-                        new InputStreamReader(socket.getInputStream()));
+                BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 
                 // Send a welcome message to the client.
