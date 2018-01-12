@@ -1,8 +1,3 @@
-// Source :
-// Ray Toal
-// Department of Electrical Engineering and Computer Science
-// Loyola Marymount University
-// http://cs.lmu.edu/~ray/notes/javanetexamples/
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,6 +5,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.ServerSocket;
 import java.net.Socket;
 
 import javax.swing.JFrame;
@@ -78,17 +76,18 @@ public class Client {
      * protocol says that the server sends three lines of text to the
      * client immediately after establishing a connection.
      */
-    public void connectToServer() throws IOException {
+    @SuppressWarnings("resource")
+	public void connectToServer() throws IOException {
 
         // Get the server address from a dialog box.
-        String serverAddress = JOptionPane.showInputDialog(
-            frame,
-            "Enter IP Address of the Server:",
-            "Welcome to the Capitalization Program",
-            JOptionPane.QUESTION_MESSAGE);
+        String serverAddress = JOptionPane.showInputDialog(frame,"Enter IP Address of the Server:","Welcome to the Capitalization Program",JOptionPane.QUESTION_MESSAGE);
+        int port = 5000;
 
-        // Make connection and initialize streams
-        Socket socket = new Socket(serverAddress, 9999);
+        Socket socket;
+		socket = new Socket(serverAddress, port);
+		
+        System.out.format("The capitalization server is running on %s:%d", serverAddress, port);
+        
         in = new BufferedReader(
                 new InputStreamReader(socket.getInputStream()));
         out = new PrintWriter(socket.getOutputStream(), true);
